@@ -327,7 +327,7 @@ export class SolvedacApi {
         let query = levelEasy === levelHard ? `*${levelEasy}` : `*${levelEasy}..${levelHard}`;
 
         if (!this.isEmptyArray(searchTag)) {
-            query += searchTag.map((i) => `%23${i}`).join('%20');
+            query += '%20' + searchTag.map((i) => `%23${i}`).join('%20');
         }
 
         let page = 0;
