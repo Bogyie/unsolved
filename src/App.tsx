@@ -65,37 +65,6 @@ const directionOptionState = atom<DirectionType>({
   default: Direction.desc
 });
 
-// search result
-const bronzeSearchState = atom<ProblemDto[]>({
-  key: 'bronzeSearch',
-  default: []
-});
-
-const silverSearchState = atom<ProblemDto[]>({
-  key: 'silverSearch',
-  default: []
-});
-
-const goldSearchState = atom<ProblemDto[]>({
-  key: 'goldSearch',
-  default: []
-});
-
-const platinumSearchState = atom<ProblemDto[]>({
-  key: 'platinumSearch',
-  default: []
-});
-
-const diamondSearchState = atom<ProblemDto[]>({
-  key: 'diamondSearch',
-  default: []
-});
-
-const rubySearchState = atom<ProblemDto[]>({
-  key: 'rubySearch',
-  default: []
-});
-
 // search element
 const bronzeElementState = atom<JSX.Element[]>({
   key: 'bronzeElement',
@@ -172,7 +141,6 @@ function SearchForm() {
   }
 
 
-
   // search option
   const [searchTag, setSearchTag] = useRecoilState(searchTagState);
   const [sortOption, setSortOption] = useRecoilState(sortOptionState);
@@ -190,34 +158,12 @@ function SearchForm() {
     setDirectionOption(stringToDirectionType(event.currentTarget.value));
   }
 
-
-
-  // search result
-  const [bronzeSearch, setBronzeSearch] = useRecoilState(bronzeSearchState);
-  const [silverSearch, setSilverSearch] = useRecoilState(silverSearchState);
-  const [goldSearch, setGoldSearch] = useRecoilState(goldSearchState);
-  const [platinumSearch, setPlatinumSearch] = useRecoilState(platinumSearchState);
-  const [diamondSearch, setDiamondSearch] = useRecoilState(diamondSearchState);
-  const [rubySearch, setRubySearch] = useRecoilState(rubySearchState);
-
   const [bronzeElement, setBronzeElement] = useRecoilState(bronzeElementState);
   const [silverElement, setSilverElement] = useRecoilState(silverElementState);
   const [goldElement, setGoldElement] = useRecoilState(goldElementState);
   const [platinumElement, setPlatinumElement] = useRecoilState(platinumElementState);
   const [diamondElement, setDiamondElement] = useRecoilState(diamondElementState);
   const [rubyElement, setRubyElement] = useRecoilState(rubyElementState);
-
-  const testProblem = {
-    problemId: 13705,
-    titleKo: "Ax+Bsin(x)=C",
-    isSolvable: true,
-    isPartial: false,
-    acceptedUserCount: 189,
-    level: numberToLevel(0),
-    votedUserCount: 62,
-    isLevelLocked: false,
-    averageTries: 28.8413
-  };
 
   const problemToComponent = (problem: ProblemDto) => {
     return (
@@ -227,8 +173,6 @@ function SearchForm() {
       </Row>
     )
   }
-
-  let solvedProblem = new Set<ProblemDto>();
 
   const updateSolvedProblem = async () => {
     const solved = await solvedacApi.searchSolvedProblemByGroup(member.split(" |\\n"));
