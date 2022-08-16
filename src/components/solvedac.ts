@@ -249,6 +249,7 @@ export class SolvedacApi {
         searchTag: string[],
         direction: DirectionType = 'asc',
         sort: SortType = 'id',
+        minAcceptUser: number = 100,
     ) : Promise<Set<ProblemDto>> {
         const solvedProblemNumber = new Set<number>();
         solved.forEach((problem) => {
@@ -273,7 +274,11 @@ export class SolvedacApi {
                 limit = Math.ceil(data.count / 100);
 
                 for (const item of data.items) {
-                    if (!solvedProblemNumber.has(item.problemId)) {
+
+                    if (
+                        !solvedProblemNumber.has(item.problemId)  // 멤버 필터
+                        && minAcceptUser <= item.acceptedUserCount // 맞은 인원 수 필터
+                        ) {
                         reuslt.add(item);
                     }
                     if (reuslt.size >= amount) {

@@ -1,6 +1,6 @@
 import { Row, Col, Container, Button, Card, CardGroup, ListGroup } from "react-bootstrap";
 import { useRecoilValue, useRecoilState, SetterOrUpdater } from "recoil";
-import { memberState, amountBronzeState, amountSilverState, amountGoldState, amountPlatinumState, amountDiamondState, amountRubyState, searchTagState, sortOptionState, directionOptionState, bronzeElementState, silverElementState, goldElementState, platinumElementState, diamondElementState, rubyElementState } from "../atoms";
+import { memberState, amountBronzeState, amountSilverState, amountGoldState, amountPlatinumState, amountDiamondState, amountRubyState, searchTagState, sortOptionState, directionOptionState, bronzeElementState, silverElementState, goldElementState, platinumElementState, diamondElementState, rubyElementState, minAcceptedUserCountState } from "../atoms";
 import { SolvedacApi, ProblemDto, LevelType, Level } from "./solvedac";
 
 export function SearchResult() {
@@ -21,6 +21,7 @@ export function SearchResult() {
     const searchTag = useRecoilValue(searchTagState);
     const sortOption = useRecoilValue(sortOptionState);
     const directionOption = useRecoilValue(directionOptionState);
+    const minAcceptUserCount = useRecoilValue(minAcceptedUserCountState);
 
     const [bronzeElement, setBronzeElement] = useRecoilState(bronzeElementState);
     const [silverElement, setSilverElement] = useRecoilState(silverElementState);
@@ -47,9 +48,11 @@ export function SearchResult() {
             if (amount > 0) {
                 solvedacApi.searchUnsolvedProblemByLevel(
                     // TODO improve searchTag split option
-                    solved, amount, level, level, searchTag.split(' '), directionOption, sortOption).then((problems) => {
+                    solved, amount, level, level, searchTag.split(' '), directionOption, sortOption, minAcceptUserCount).then((problems) => {
                         const result: JSX.Element[] = [];
-                        problems.forEach((problem) => result.push(problemToComponent(problem)));
+                        Array.from(problems)
+                            .sort((a, b) => a.problemId - b.problemId)
+                            .forEach((problem) => result.push(problemToComponent(problem)));
                         setter(result);
                     });
             }

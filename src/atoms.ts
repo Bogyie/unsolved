@@ -46,13 +46,23 @@ export const searchTagState = atom<string>({
 
 export const sortOptionState = atom<SortType>({
     key: 'sortOption',
-    default: Sort.level
+    default: Sort.random
 });
 
 export const directionOptionState = atom<DirectionType>({
     key: 'directionOption',
     default: Direction.desc
 });
+
+export const minAcceptedUserCountState = atom<number>({
+    key: 'minAcceptedUserCount',
+    default: 50
+})
+
+export const titleContainKoreanState = atom<boolean>({
+    key: 'titleContainKorean',
+    default: false
+})
 
 // search element
 export const bronzeElementState = atom<JSX.Element[]>({
