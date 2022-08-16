@@ -236,17 +236,18 @@ export class SolvedacApi {
         direction: DirectionType = 'desc',
         sort: SortType = 'level'
     ): Promise<AxiosResponse<SearchDto>> {
-        const uri = SolvedacApi.baseUrl + '/search/problem';
+        const uri = `${SolvedacApi.baseUrl}/search/problem?query=${query}&direction=${direction}&page=${page}&sort=${sort}`;
+        // const uri = SolvedacApi.baseUrl + '/search/problem';
         return axios.get(
             uri,
-            {
-                params: {
-                    query: query,
-                    direction: direction,
-                    page: page,
-                    sort: sort,
-                }
-            }
+            // {
+            //     params: {
+            //         query: query,
+            //         direction: direction,
+            //         page: page,
+            //         sort: sort,
+            //     }
+            // }
         )
     }
 
