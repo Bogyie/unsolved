@@ -15,7 +15,7 @@ export interface ProblemDto {
     averageTries: number;
 }
 
-const Level = {
+export const Level = {
     Bronze: 'b',
     Bronze5: 'b5',
     Bronze4: 'b4',
@@ -59,38 +59,44 @@ const Level = {
     Ruby1: 'r1',
 } as const;
 
-const LevelArray = [
-    'UnRanked',
-    'Bronze 5',
-    'Bronze 4',
-    'Bronze 3',
-    'Bronze 2',
-    'Bronze 1',
-    'Silver 5',
-    'Silver 4',
-    'Silver 3',
-    'Silver 2',
-    'Silver 1',
-    'Gold 5',
-    'Gold 4',
-    'Gold 3',
-    'Gold 2',
-    'Gold 1',
-    'Platinum 5',
-    'Platinum 4',
-    'Platinum 3',
-    'Platinum 2',
-    'Platinum 1',
-    'Diamond 5',
-    'Diamond 4',
-    'Diamond 3',
-    'Diamond 2',
-    'Diamond 1',
-    'Ruby 5',
-    'Ruby 4',
-    'Ruby 3',
-    'Ruby 2',
-    'Ruby 1',
+export const LevelArray = [
+    Level.Bronze,
+    Level.Bronze,
+    Level.Bronze5,
+    Level.Bronze4,
+    Level.Bronze3,
+    Level.Bronze2,
+    Level.Bronze1,
+    Level.Silver,
+    Level.Silver5,
+    Level.Silver4,
+    Level.Silver3,
+    Level.Silver2,
+    Level.Silver1,
+    Level.Gold,
+    Level.Gold5,
+    Level.Gold4,
+    Level.Gold3,
+    Level.Gold2,
+    Level.Gold1,
+    Level.Platinum,
+    Level.Platinum5,
+    Level.Platinum4,
+    Level.Platinum3,
+    Level.Platinum2,
+    Level.Platinum1,
+    Level.Diamond,
+    Level.Diamond5,
+    Level.Diamond4,
+    Level.Diamond3,
+    Level.Diamond2,
+    Level.Diamond1,
+    Level.Ruby,
+    Level.Ruby5,
+    Level.Ruby4,
+    Level.Ruby3,
+    Level.Ruby2,
+    Level.Ruby1,
 ] as const;
 
 export type LevelType = typeof Level[keyof typeof Level];
@@ -179,9 +185,9 @@ export class SolvedacApi {
         const result = new Set<ProblemDto>();
 
         let limit = 1;
-        let page = 1;
+        let page = 0;
 
-        while (page <= limit) {
+        while (page++ <= limit) {
             const response = await this.search(query);
             const { status, data } = response;
             if (status === 200) {
@@ -190,6 +196,8 @@ export class SolvedacApi {
                 items.forEach((item) => {
                     result.add(item);
                 })
+            } else {
+                break;
             }
         }
 
@@ -205,6 +213,13 @@ export class SolvedacApi {
     public async searchSolvedProblemByGroup(
         memberIds: string[]
     ): Promise<Set<ProblemDto>> {
+
+        // empty group
+        memberIds = memberIds.filter((m) => m !== '')
+        if (memberIds.length < 1 || memberIds[0] === '') {
+            return new Set<ProblemDto>();
+        }
+
         const result = new Set<ProblemDto>();
 
         for (const memberId of memberIds) {
@@ -227,7 +242,7 @@ export class SolvedacApi {
         levelHard: LevelType,
         direction: DirectionType = 'asc',
         sort: SortType = 'id',
-    ) {
+    ) : Promise<Set<ProblemDto>> {
         const solvedProblemNumber = new Set<number>();
         solved.forEach((problem) => {
             solvedProblemNumber.add(problem.problemId);
@@ -235,14 +250,14 @@ export class SolvedacApi {
 
         const query = levelEasy === levelHard ? `*${levelEasy}` : `*${levelEasy}..${levelHard}`;
 
-        let page = 1;
+        let page = 0;
         let limit = 1;
-        const reuslt = new Set<ProblemDto>;
+        const reuslt = new Set<ProblemDto>();
 
         while (page++ <= limit) {
             const response = await this.search(query, direction, page, sort);
 
-            if (response.status == 200) {
+            if (response.status === 200) {
                 const { data } = response;
                 limit = Math.ceil(data.count / 100);
 
@@ -268,6 +283,6 @@ export class SolvedacApi {
 }
 
 
-export function numericTierToString(tier: number) {
+export function numberToLevel(tier: number) {
     return LevelArray[tier];
 }
