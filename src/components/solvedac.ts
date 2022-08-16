@@ -16,39 +16,50 @@ export interface ProblemDto {
 }
 
 const Level = {
-    Bronze5 : 'b5',
-    Bronze4 : 'b4',
-    Bronze3 : 'b3',
-    Bronze2 : 'b2',
-    Bronze1 : 'b1',
-    Silver5 : 's5',
-    Silver4 : 's4',
-    Silver3 : 's3',
-    Silver2 : 's2',
-    Silver1 : 's1',
-    Gold5 : 'g5',
-    Gold4 : 'g4',
-    Gold3 : 'g3',
-    Gold2 : 'g2',
-    Gold1 : 'g1',
-    Platinum5 : 'p5',
-    Platinum4 : 'p4',
-    Platinum3 : 'p3',
-    Platinum2 : 'p2',
-    Platinum1 : 'p1',
-    Diamond5 : 'd5',
-    Diamond4 : 'd4',
-    Diamond3 : 'd3',
-    Diamond2 : 'd2',
-    Diamond1 : 'd1',
-    Ruby5 : 'r5',
-    Ruby4 : 'r4',
-    Ruby3 : 'r3',
-    Ruby2 : 'r2',
-    Ruby1 : 'r1',
- } as const;
+    Bronze: 'b',
+    Bronze5: 'b5',
+    Bronze4: 'b4',
+    Bronze3: 'b3',
+    Bronze2: 'b2',
+    Bronze1: 'b1',
 
- const LevelArray = [
+    Silver: 's',
+    Silver5: 's5',
+    Silver4: 's4',
+    Silver3: 's3',
+    Silver2: 's2',
+    Silver1: 's1',
+
+    Gold: 'g',
+    Gold5: 'g5',
+    Gold4: 'g4',
+    Gold3: 'g3',
+    Gold2: 'g2',
+    Gold1: 'g1',
+
+    Platinum: 'p',
+    Platinum5: 'p5',
+    Platinum4: 'p4',
+    Platinum3: 'p3',
+    Platinum2: 'p2',
+    Platinum1: 'p1',
+
+    Diamond: 'd',
+    Diamond5: 'd5',
+    Diamond4: 'd4',
+    Diamond3: 'd3',
+    Diamond2: 'd2',
+    Diamond1: 'd1',
+
+    Ruby: 'r',
+    Ruby5: 'r5',
+    Ruby4: 'r4',
+    Ruby3: 'r3',
+    Ruby2: 'r2',
+    Ruby1: 'r1',
+} as const;
+
+const LevelArray = [
     'UnRanked',
     'Bronze 5',
     'Bronze 4',
@@ -80,29 +91,53 @@ const Level = {
     'Ruby 3',
     'Ruby 2',
     'Ruby 1',
- ] as const;
+] as const;
 
-export type LevelType = typeof Level[ keyof typeof Level];
+export type LevelType = typeof Level[keyof typeof Level];
 
 export interface SearchDto {
     count: number;
     items: ProblemDto[];
 }
 
-const Direction = {
-    asc:'asc',
-    desc:'desc'
-} as const
+export const Direction = {
+    asc: 'asc',
+    desc: 'desc'
+} as const;
 export type DirectionType = typeof Direction[keyof typeof Direction];
 
-const Sort = {
-    id: 'id',
-    level:'level',
-    title:'title',
-    average_try:'average_try',
-    random:'random'
+export function stringToDirectionType(str: string) {
+    switch (str) {
+        case 'asc':
+            return Direction.asc;
+        default:
+            return Direction.desc;
+    }
 }
+
+export const Sort = {
+    id: 'id',
+    level: 'level',
+    title: 'title',
+    average_try: 'average_try',
+    random: 'random'
+} as const;
 export type SortType = typeof Sort[keyof typeof Sort];
+
+export function stringToSortType(str: string) {
+    switch (str) {
+        case 'id':
+            return Sort.id;
+        case 'level':
+            return Sort.level;
+        case 'title':
+            return Sort.title;
+        case 'average_try':
+            return Sort.average_try;
+        default:
+            return Sort.random;
+    }
+}
 
 export interface SearchQueryDto {
     query: string;
@@ -148,9 +183,9 @@ export class SolvedacApi {
 
         while (page <= limit) {
             const response = await this.search(query);
-            const {status, data} = response;
+            const { status, data } = response;
             if (status === 200) {
-                const {count, items} = data;
+                const { count, items } = data;
                 limit = Math.ceil(count / SolvedacApi.itemsInPage);
                 items.forEach((item) => {
                     result.add(item);
@@ -208,7 +243,7 @@ export class SolvedacApi {
             const response = await this.search(query, direction, page, sort);
 
             if (response.status == 200) {
-                const {data} = response;
+                const { data } = response;
                 limit = Math.ceil(data.count / 100);
 
                 for (const item of data.items) {
@@ -233,6 +268,6 @@ export class SolvedacApi {
 }
 
 
-export function numericTierToString(tier:number) {
+export function numericTierToString(tier: number) {
     return LevelArray[tier];
 }
