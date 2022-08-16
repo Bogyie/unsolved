@@ -1,19 +1,15 @@
 import React from "react";
-import { Form, Row, Col } from "react-bootstrap";
+import { Form, Row, Col, Card, CardGroup } from "react-bootstrap";
 import { useRecoilState } from "recoil";
 import { searchTagState, sortOptionState, directionOptionState, minAcceptedUserCountState } from "../atoms";
 import { stringToSortType, stringToDirectionType, Sort, Direction } from "./solvedac";
 
 
 export function SearchOption() {
-    const [searchTag, setSearchTag] = useRecoilState(searchTagState);
     const [sortOption, setSortOption] = useRecoilState(sortOptionState);
     const [directionOption, setDirectionOption] = useRecoilState(directionOptionState);
     const [minAcceptUserCount, setMinAcceptUserCount] = useRecoilState(minAcceptedUserCountState);
 
-    const onChangeSearchTag = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchTag(event.currentTarget.value);
-    }
 
     const onChangeSortOption = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setSortOption(stringToSortType(event.currentTarget.value));
@@ -31,14 +27,9 @@ export function SearchOption() {
     // 멤버가 안푼 문제만 검색할지 선택 옵션
 
     return (
-        <Form.Group controlId='searchOption'>
-          <Row className='m-3' >
-            <Form.Label>{`검색 태그 (띄어쓰기로 구분)`}</Form.Label>
-            <Form.Control value={searchTag} onChange={onChangeSearchTag} />
-          </Row>
-          <Row className='m-3' >
-            <Col>
-              <Form.Label>{`검색 우선순위`}</Form.Label>
+        <CardGroup className='mt-3 mb-3'>
+            <Card>
+              <Card.Header>{`검색 우선순위`}</Card.Header>
               <Form.Select defaultValue={sortOption} onChange={onChangeSortOption}>
                 <option value={Sort.id}>문제 번호</option>
                 <option value={Sort.level}>난이도</option>
@@ -46,19 +37,18 @@ export function SearchOption() {
                 <option value={Sort.average_try}>평균 시도</option>
                 <option value={Sort.random}>랜덤</option>
               </Form.Select>
-            </Col>
-            <Col>
-              <Form.Label>{`검색 우선순위`}</Form.Label>
+            </Card>
+            <Card>
+              <Card.Header>{`검색 우선순위`}</Card.Header>
               <Form.Select defaultValue={directionOption} onChange={onChangeDirectionOption}>
                 <option value={Direction.asc}>오름차순</option>
                 <option value={Direction.desc}>내림차순</option>
               </Form.Select>
-            </Col>
-            <Col>
-              <Form.Label>{`최소 맞은 인원`}</Form.Label>
+            </Card>
+            <Card>
+              <Card.Header>{`최소 맞은 인원`}</Card.Header>
               <Form.Control value={minAcceptUserCount} onChange={onChangeMinAccpectUserCount}/>
-            </Col>
-          </Row>
-        </Form.Group>
+            </Card>
+        </CardGroup>
     )
 }

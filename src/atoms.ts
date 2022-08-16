@@ -2,9 +2,9 @@ import { atom } from 'recoil';
 import { Direction, DirectionType, Sort, SortType } from './components/solvedac';
 
 // member
-export const memberState = atom<string>({
+export const memberState = atom<Set<string>>({
     key: 'member',
-    default: ''
+    default: new Set<string>()
 })
 
 // amount
@@ -39,9 +39,9 @@ export const amountRubyState = atom<number>({
 });
 
 // search options
-export const searchTagState = atom<string>({
+export const searchTagState = atom<Set<string>>({
     key: 'searchTag',
-    default: ''
+    default: new Set<string>()
 })
 
 export const sortOptionState = atom<SortType>({

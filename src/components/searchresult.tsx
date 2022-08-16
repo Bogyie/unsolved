@@ -42,13 +42,12 @@ export function SearchResult() {
     }
 
     const updateSolvedProblem = async () => {
-        const solved = await solvedacApi.searchSolvedProblemByGroup(member.split(" "));
+        const solved = await solvedacApi.searchSolvedProblemByGroup(Array.from(member));
 
         function update(level: LevelType, setter: SetterOrUpdater<JSX.Element[]>, amount: number) {
             if (amount > 0) {
                 solvedacApi.searchUnsolvedProblemByLevel(
-                    // TODO improve searchTag split option
-                    solved, amount, level, level, searchTag.split(' '), directionOption, sortOption, minAcceptUserCount).then((problems) => {
+                    solved, amount, level, level, Array.from(searchTag), directionOption, sortOption, minAcceptUserCount).then((problems) => {
                         const result: JSX.Element[] = [];
                         Array.from(problems)
                             .sort((a, b) => a.problemId - b.problemId)
@@ -69,8 +68,11 @@ export function SearchResult() {
 
     return (
         <Container>
-            <Button className='m-2' onClick={updateSolvedProblem}>문제 검색</Button>
-            <Row xs={1} md={2} lg={2} className={'g-4'}>
+            <Row>
+            <Button className='mt-3 mb-3' onClick={updateSolvedProblem}>문제 검색</Button>
+            </Row>
+            
+            <Row xs={1} md={2} lg={2} className={'gy-3 gx-3'}>
                 <Col>
                     <Card>
                         <Card.Header
@@ -137,7 +139,6 @@ export function SearchResult() {
                         </ListGroup>
                     </Card>
                 </Col>
-
             </Row>
 
         </Container>

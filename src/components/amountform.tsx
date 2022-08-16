@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Row, Col, Container } from "react-bootstrap";
+import { Form, Row, Col, Container, Card } from "react-bootstrap";
 import { useRecoilState } from "recoil";
 import { amountBronzeState, amountSilverState, amountGoldState, amountPlatinumState, amountDiamondState, amountRubyState } from "../atoms";
 
@@ -45,30 +45,33 @@ export function AmountForm() {
   }
 
   return (
-    <Form.Group className='m-3' controlId='amountByLeve'>
-      <Row>
-        <Container>문제 개수</Container>
-      </Row>
-      <Row>
-        <Col>
-          <Form.Label style={{ color: 'rgb(160, 90, 31)', fontWeight: 'bold' }}>브론즈</Form.Label>
-          <Form.Control value={amountBronze} onChange={onChangeAmountBronze} onWheel={onWheelAmountBronze} /></Col>
-        <Col>
-          <Form.Label style={{ color: 'rgb(119, 134, 154)', fontWeight: 'bold' }}>실버</Form.Label>
-          <Form.Control value={amountSilver} onChange={onChangeAmountSilver} /></Col>
-        <Col>
-          <Form.Label style={{ color: 'rgb(223, 157, 55)', fontWeight: 'bold' }}>골드</Form.Label>
-          <Form.Control value={amountGold} onChange={onChangeAmountGold} /></Col>
-        <Col>
-          <Form.Label style={{ color: 'rgb(39, 226, 164)', fontWeight: 'bold' }}>플래티넘</Form.Label>
-          <Form.Control value={amountPlatinum} onChange={onChangeAmountPlatinum} /></Col>
-        <Col>
-          <Form.Label style={{ color: 'rgb(107, 188, 247)', fontWeight: 'bold' }}>다이아</Form.Label>
-          <Form.Control value={amountDiamond} onChange={onChangeAmountDiamond} /></Col>
-        <Col>
-          <Form.Label style={{ color: 'rgb(231, 52, 100)', fontWeight: 'bold' }}>루비</Form.Label>
-          <Form.Control value={amountRuby} onChange={onChangeAmountRuby} /></Col>
-      </Row>
-    </Form.Group>
+    <Card className='mt-3 mb-3 bg-light'>
+      <Card.Header>
+        {'문제 개수'}
+      </Card.Header>
+      <Card.Body>
+        <Row>
+          <Col>
+            <Form.Label style={{ color: 'rgb(160, 90, 31)', fontWeight: 'bold' }}>브론즈</Form.Label>
+            <Form.Control value={amountBronze} onChange={onChangeAmountBronze} onWheel={onWheelAmountBronze} /></Col>
+          <Col>
+            <Form.Label style={{ color: 'rgb(119, 134, 154)', fontWeight: 'bold' }}>실버</Form.Label>
+            <Form.Control value={amountSilver} onChange={onChangeAmountSilver} /></Col>
+          <Col>
+            <Form.Label style={{ color: 'rgb(223, 157, 55)', fontWeight: 'bold' }}>골드</Form.Label>
+            <Form.Control value={amountGold} onChange={onChangeAmountGold} /></Col>
+          <Col>
+            <Form.Label style={{ color: 'rgb(39, 226, 164)', fontWeight: 'bold' }}>플래티넘</Form.Label>
+            <Form.Control value={amountPlatinum} onChange={onChangeAmountPlatinum} /></Col>
+          <Col>
+            <Form.Label style={{ color: 'rgb(107, 188, 247)', fontWeight: 'bold' }}>다이아</Form.Label>
+            <Form.Control value={amountDiamond} onChange={onChangeAmountDiamond} /></Col>
+          <Col>
+            <Form.Label style={{ color: 'rgb(231, 52, 100)', fontWeight: 'bold' }}>루비</Form.Label>
+            <Form.Control value={amountRuby} onChange={onChangeAmountRuby} />
+          </Col>
+        </Row>
+      </Card.Body>
+    </Card>
   )
 }

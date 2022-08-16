@@ -207,7 +207,6 @@ export interface Tag {
     isMeta: boolean;
     bojTagId: number;
     problemCount: number;
-    aliases: { alias: string }[];
 }
 
 export interface SuggestionResult {
@@ -227,7 +226,7 @@ export class SolvedacApi {
     static baseUrl = 'https://solved.ac/api/v3';
 
     public suggestion(text: string): Promise<AxiosResponse<SuggestionResult>> {
-        const uri = SolvedacApi.baseUrl + '/suggestion'
+        const uri = SolvedacApi.baseUrl + '/search/suggestion'
         return axios.get(uri, { params: { query: text } });
     }
 
