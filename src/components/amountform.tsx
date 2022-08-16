@@ -35,25 +35,25 @@ export function AmountForm() {
     }
 
     return (
-        <Form.Group className='mb-3' controlId='amountByLeve'>
+        <Form.Group className='m-3' controlId='amountByLeve'>
           <Row>
             <Col>
-              <Form.Label>amountBronze</Form.Label>
+              <Form.Label style={{ color: 'rgb(160, 90, 31)', fontWeight: 'bold' }}>브론즈 개수</Form.Label>
               <Form.Control value={amountBronze} onChange={onChangeAmountBronze} /></Col>
             <Col>
-              <Form.Label>amountSilver</Form.Label>
+              <Form.Label style={{ color: 'rgb(119, 134, 154)', fontWeight: 'bold' }}>실버 개수</Form.Label>
               <Form.Control value={amountSilver} onChange={onChangeAmountSilver} /></Col>
             <Col>
-              <Form.Label>amountGold</Form.Label>
+              <Form.Label style={{ color: 'rgb(223, 157, 55)', fontWeight: 'bold' }}>골드 개수</Form.Label>
               <Form.Control value={amountGold} onChange={onChangeAmountGold} /></Col>
             <Col>
-              <Form.Label>amountPlatinum</Form.Label>
+              <Form.Label style={{ color: 'rgb(39, 226, 164)', fontWeight: 'bold' }}>플래티넘 개수</Form.Label>
               <Form.Control value={amountPlatinum} onChange={onChangeAmountPlatinum} /></Col>
             <Col>
-              <Form.Label>amountDiamond</Form.Label>
+              <Form.Label style={{ color: 'rgb(107, 188, 247)', fontWeight: 'bold' }}>다이아 개수</Form.Label>
               <Form.Control value={amountDiamond} onChange={onChangeAmountDiamond} /></Col>
             <Col>
-              <Form.Label>amountRuby</Form.Label>
+              <Form.Label style={{ color: 'rgb(231, 52, 100)', fontWeight: 'bold' }}>루비 개수</Form.Label>
               <Form.Control value={amountRuby} onChange={onChangeAmountRuby} /></Col>
           </Row>
         </Form.Group>

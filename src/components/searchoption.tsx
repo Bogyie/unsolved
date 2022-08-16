@@ -22,27 +22,27 @@ export function SearchOption() {
     }
 
     return (
-        <Form.Group className='mb-3' controlId='searchOption'>
-          <Row>
-            <Form.Label>{`검색 태그`}</Form.Label>
+        <Form.Group controlId='searchOption'>
+          <Row className='m-3' >
+            <Form.Label>{`검색 태그 (띄어쓰기로 구분)`}</Form.Label>
             <Form.Control value={searchTag} onChange={onChangeSearchTag} />
           </Row>
-          <Row>
+          <Row className='m-3' >
             <Col>
               <Form.Label>{`정렬 기준`}</Form.Label>
               <Form.Select defaultValue={sortOption} onChange={onChangeSortOption}>
-                <option value={Sort.id}>id</option>
-                <option value={Sort.level}>level</option>
-                <option value={Sort.title}>title</option>
-                <option value={Sort.average_try}>average_try</option>
-                <option value={Sort.random}>random</option>
+                <option value={Sort.id}>문제 ID</option>
+                <option value={Sort.level}>문제 수준</option>
+                <option value={Sort.title}>문제 제목</option>
+                <option value={Sort.average_try}>평균 시도</option>
+                <option value={Sort.random}>랜덤</option>
               </Form.Select>
             </Col>
             <Col>
               <Form.Label>{`정렬 방법`}</Form.Label>
               <Form.Select defaultValue={directionOption} onChange={onChangeDirectionOption}>
-                <option value={Direction.asc}>asc</option>
-                <option value={Direction.desc}>desc</option>
+                <option value={Direction.asc}>오름차순</option>
+                <option value={Direction.desc}>내림차순</option>
               </Form.Select>
             </Col>
           </Row>

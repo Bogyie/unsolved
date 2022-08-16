@@ -11,7 +11,7 @@ export function MemberForm() {
     }
 
     return (
-        <Form.Group className='mb-3' controlId='fromGroupMember'>
+        <Form.Group className='m-3' controlId='fromGroupMember'>
             <Form.Label>{'멤버 목록 (띄어쓰기로 구분)'}</Form.Label>
             <Form.Control as='textarea' rows={3} value={member} onChange={onChangeMamber} />
         </Form.Group>
