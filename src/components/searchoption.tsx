@@ -38,10 +38,10 @@ export function SearchOption() {
           </Row>
           <Row className='m-3' >
             <Col>
-              <Form.Label>{`정렬 기준`}</Form.Label>
+              <Form.Label>{`검색 우선순위`}</Form.Label>
               <Form.Select defaultValue={sortOption} onChange={onChangeSortOption}>
-                <option value={Sort.id}>문제 ID</option>
-                <option value={Sort.level}>문제 수준</option>
+                <option value={Sort.id}>문제 번호</option>
+                <option value={Sort.level}>난이도</option>
                 <option value={Sort.title}>문제 제목</option>
                 <option value={Sort.average_try}>평균 시도</option>
                 <option value={Sort.random}>랜덤</option>
@@ -50,8 +50,8 @@ export function SearchOption() {
             <Col>
               <Form.Label>{`검색 우선순위`}</Form.Label>
               <Form.Select defaultValue={directionOption} onChange={onChangeDirectionOption}>
-                <option value={Direction.asc}>우선순위 높은 문제부터</option>
-                <option value={Direction.desc}>우선순위 낮은 문제부터</option>
+                <option value={Direction.asc}>오름차순</option>
+                <option value={Direction.desc}>내림차순</option>
               </Form.Select>
             </Col>
             <Col>

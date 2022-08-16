@@ -152,12 +152,84 @@ export interface SearchQueryDto {
     sort: SortType;
 }
 
+export interface Organization {
+    organizationId: number;
+    name: string;
+    type: string;
+    rating: number;
+    userCount: number;
+    voteCount: number;
+    solvedCount: number;
+    color: string;
+}
+
+export interface Badge {
+    badgeId: string;
+    badgeImageUrl: string;
+    displayName: string;
+    displayDescription: string;
+}
+
+export interface Background {
+    backgroundId: string;
+    backgroundImageUrl: string;
+    author: string;
+    authorUrl: string;
+    displayName: string;
+    displayDescription: string;
+}
+
+export interface User {
+    handle: string;
+    bio: string;
+    organizations: Organization[];
+    badge: Badge;
+    background: Background;
+    profileImageUrl: string;
+    solvedCount: number;
+    voteCount: number;
+    exp: number;
+    tier: number;
+    rating: number;
+    ratingByProblemsSum: number;
+    ratingByClass: number;
+    ratingBySolvedCount: number;
+    ratingByVoteCount: number;
+    class: number;
+    classDecoration: string;
+    rivalCount: number;
+    reverseRivalCount: number;
+    maxStreak: number;
+}
+
+export interface Tag {
+    key: string;
+    isMeta: boolean;
+    bojTagId: number;
+    problemCount: number;
+    aliases: { alias: string }[];
+}
+
+export interface SuggestionResult {
+    problems: ProblemDto[];
+    problemCount: number;
+    users: User[];
+    userCount: number;
+    tags: Tag[];
+    tagCount: number;
+}
+
 
 // Class & Function
 
 export class SolvedacApi {
     static itemsInPage = 100;
     static baseUrl = 'https://solved.ac/api/v3';
+
+    public suggestion(text: string): Promise<AxiosResponse<SuggestionResult>> {
+        const uri = SolvedacApi.baseUrl + '/suggestion'
+        return axios.get(uri, { params: { query: text } });
+    }
 
     private search(
         query: string,
