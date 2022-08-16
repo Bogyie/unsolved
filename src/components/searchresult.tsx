@@ -1,4 +1,4 @@
-import { Row, Col, Container, Button, Card, CardGroup } from "react-bootstrap";
+import { Row, Col, Container, Button, Card, CardGroup, ListGroup } from "react-bootstrap";
 import { useRecoilValue, useRecoilState, SetterOrUpdater } from "recoil";
 import { memberState, amountBronzeState, amountSilverState, amountGoldState, amountPlatinumState, amountDiamondState, amountRubyState, searchTagState, sortOptionState, directionOptionState, bronzeElementState, silverElementState, goldElementState, platinumElementState, diamondElementState, rubyElementState } from "../atoms";
 import { SolvedacApi, ProblemDto, LevelType, Level } from "./solvedac";
@@ -31,10 +31,12 @@ export function SearchResult() {
 
     const problemToComponent = (problem: ProblemDto) => {
         return (
-            <Row>
-                <Col>{problem.titleKo}</Col>
-                <Col>{problem.problemId}</Col>
-            </Row>
+            <ListGroup.Item>
+                <Row>
+                    <Col>{problem.titleKo}</Col>
+                    <Col>{problem.problemId}</Col>
+                </Row>
+            </ListGroup.Item>
         )
     }
 
@@ -72,9 +74,9 @@ export function SearchResult() {
                             style={{ color: 'rgb(160, 90, 31)', fontWeight: 'bold' }} >
                             브론즈
                         </Card.Header>
-                        <Card.Body>
+                        <ListGroup>
                             {bronzeElement}
-                        </Card.Body>
+                        </ListGroup>
 
                     </Card>
                 </Col>
@@ -83,9 +85,9 @@ export function SearchResult() {
                         <Card.Header style={{ color: 'rgb(119, 134, 154)', fontWeight: 'bold' }}>
                             실버
                         </Card.Header>
-                        <Card.Body>
+                        <ListGroup>
                             {silverElement}
-                        </Card.Body>
+                        </ListGroup>
                     </Card>
                 </Col>
 
@@ -94,9 +96,9 @@ export function SearchResult() {
                         <Card.Header style={{ color: 'rgb(223, 157, 55)', fontWeight: 'bold' }}>
                             골드
                         </Card.Header>
-                        <Card.Body>
+                        <ListGroup>
                             {goldElement}
-                        </Card.Body>
+                        </ListGroup>
                     </Card>
                 </Col>
 
@@ -105,9 +107,9 @@ export function SearchResult() {
                         <Card.Header style={{ color: 'rgb(39, 226, 164)', fontWeight: 'bold' }}>
                             플래티넘
                         </Card.Header>
-                        <Card.Body>
+                        <ListGroup>
                             {platinumElement}
-                        </Card.Body>
+                        </ListGroup>
                     </Card>
                 </Col>
 
@@ -116,9 +118,9 @@ export function SearchResult() {
                         <Card.Header style={{ color: 'rgb(107, 188, 247)', fontWeight: 'bold' }}>
                             다이아
                         </Card.Header>
-                        <Card.Body>
+                        <ListGroup>
                             {diamondElement}
-                        </Card.Body>
+                        </ListGroup>
                     </Card>
                 </Col>
 
@@ -127,9 +129,9 @@ export function SearchResult() {
                         <Card.Header style={{ color: 'rgb(231, 52, 100)', fontWeight: 'bold' }}>
                             루비
                         </Card.Header>
-                        <Card.Body>
+                        <ListGroup>
                             {rubyElement}
-                        </Card.Body>
+                        </ListGroup>
                     </Card>
                 </Col>
 
