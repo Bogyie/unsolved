@@ -42,7 +42,7 @@ export function SearchResult() {
     }
 
     const updateSolvedProblem = async () => {
-        const solved = await solvedacApi.searchSolvedProblemByGroup(member.split(" |\\n"));
+        const solved = await solvedacApi.searchSolvedProblemByGroup(member.split(" "));
 
         function update(level: LevelType, setter: SetterOrUpdater<JSX.Element[]>, amount: number) {
             if (amount > 0) {

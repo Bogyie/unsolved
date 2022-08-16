@@ -187,7 +187,7 @@ export class SolvedacApi {
         let limit = 1;
         let page = 0;
 
-        while (page++ <= limit) {
+        while (page++ < limit) {
             const response = await this.search(query, page);
             const { status, data } = response;
             if (status === 200) {
@@ -228,15 +228,12 @@ export class SolvedacApi {
             return result;
         }
 
-        for (const memberId of memberIds) {
-            await this.searchSolvedProblemByMember(
-                memberId
-            ).then((items) => {
-                items.forEach((item) => {
-                    result.add(item);
-                })
-            });
-        }
+        await Promise.all(memberIds.map(
+            async (memberId) => {
+                const problemSet = await this.searchSolvedProblemByMember(memberId);
+                problemSet.forEach((problem) => result.add(problem));
+            })
+        );
 
         return result;
     }
@@ -250,7 +247,7 @@ export class SolvedacApi {
         direction: DirectionType = 'asc',
         sort: SortType = 'id',
         minAcceptUser: number = 100,
-    ) : Promise<Set<ProblemDto>> {
+    ): Promise<Set<ProblemDto>> {
         const solvedProblemNumber = new Set<number>();
         solved.forEach((problem) => {
             solvedProblemNumber.add(problem.problemId);
@@ -278,7 +275,7 @@ export class SolvedacApi {
                     if (
                         !solvedProblemNumber.has(item.problemId)  // 멤버 필터
                         && minAcceptUser <= item.acceptedUserCount // 맞은 인원 수 필터
-                        ) {
+                    ) {
                         reuslt.add(item);
                     }
                     if (reuslt.size >= amount) {
