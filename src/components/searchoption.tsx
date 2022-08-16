@@ -21,6 +21,9 @@ export function SearchOption() {
         setDirectionOption(stringToDirectionType(event.currentTarget.value));
     }
 
+    // TODO 한국어 문제만 검색
+    // TODO n명 이상 맞춘 문제만 검색
+
     return (
         <Form.Group controlId='searchOption'>
           <Row className='m-3' >
