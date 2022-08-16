@@ -34,7 +34,7 @@ export function SearchResult() {
             <ListGroup.Item>
                 <Row>
                     <Col>{problem.titleKo}</Col>
-                    <Col>{problem.problemId}</Col>
+                    <Col><a href={`https://www.acmicpc.net/problem/${problem.problemId}`} target="_blank">{problem.problemId}</a></Col>
                 </Row>
             </ListGroup.Item>
         )
