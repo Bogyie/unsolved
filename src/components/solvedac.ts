@@ -204,6 +204,14 @@ export class SolvedacApi {
         return result;
     }
 
+    private isEmptyArray(arr: any[]): boolean {
+        arr = arr.filter((i) => i);
+        if (arr.length < 1 || !arr[0]) {
+            return true;
+        }
+        return false;
+    }
+
     public async searchSolvedProblemByMember(
         memberId: string
     ): Promise<Set<ProblemDto>> {
@@ -214,13 +222,11 @@ export class SolvedacApi {
         memberIds: string[]
     ): Promise<Set<ProblemDto>> {
 
-        // empty group
-        memberIds = memberIds.filter((m) => m !== '')
-        if (memberIds.length < 1 || memberIds[0] === '') {
-            return new Set<ProblemDto>();
-        }
-
         const result = new Set<ProblemDto>();
+
+        if (this.isEmptyArray(memberIds)) {
+            return result;
+        }
 
         for (const memberId of memberIds) {
             await this.searchSolvedProblemByMember(
@@ -240,6 +246,7 @@ export class SolvedacApi {
         amount: number,
         levelEasy: LevelType,
         levelHard: LevelType,
+        searchTag: string[],
         direction: DirectionType = 'asc',
         sort: SortType = 'id',
     ) : Promise<Set<ProblemDto>> {
@@ -248,7 +255,11 @@ export class SolvedacApi {
             solvedProblemNumber.add(problem.problemId);
         });
 
-        const query = levelEasy === levelHard ? `*${levelEasy}` : `*${levelEasy}..${levelHard}`;
+        let query = levelEasy === levelHard ? `*${levelEasy}` : `*${levelEasy}..${levelHard}`;
+
+        if (!this.isEmptyArray(searchTag)) {
+            query += searchTag.map((i) => `%23${i}`).join('%20');
+        }
 
         let page = 0;
         let limit = 1;

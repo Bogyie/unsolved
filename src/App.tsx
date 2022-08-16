@@ -1,9 +1,10 @@
 import { Button, Card, Col, Container, Form, Row } from 'react-bootstrap';
 import './App.css';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, SetterOrUpdater } from 'recoil';
 
 import {
   Direction, Level,
+  LevelType,
   ProblemDto, SolvedacApi,
   Sort, stringToDirectionType,
   stringToSortType
@@ -21,6 +22,7 @@ import {
 import React from 'react';
 import { MemberForm } from './components/memberform';
 import { AmountForm } from './components/amountform';
+import { SearchOption } from './components/searchoption';
 
 
 function SearchForm() {
@@ -42,17 +44,6 @@ function SearchForm() {
   const [sortOption, setSortOption] = useRecoilState(sortOptionState);
   const [directionOption, setDirectionOption] = useRecoilState(directionOptionState);
 
-  const onChangeSearchTag = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTag(event.currentTarget.value);
-  }
-
-  const onChangeSortOption = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSortOption(stringToSortType(event.currentTarget.value));
-  }
-
-  const onChangeDirectionOption = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setDirectionOption(stringToDirectionType(event.currentTarget.value));
-  }
 
   const [bronzeElement, setBronzeElement] = useRecoilState(bronzeElementState);
   const [silverElement, setSilverElement] = useRecoilState(silverElementState);
@@ -73,95 +64,32 @@ function SearchForm() {
   const updateSolvedProblem = async () => {
     const solved = await solvedacApi.searchSolvedProblemByGroup(member.split(" |\\n"));
 
-    if (amountBronze > 0) {
-      solvedacApi.searchUnsolvedProblemByLevel(
-        solved, amountBronze, Level.Bronze, Level.Bronze, directionOption, sortOption).then((problems) => {
-          const result: JSX.Element[] = [];
-          problems.forEach((problem) => result.push(problemToComponent(problem)));
-          setBronzeElement(result);
-        });
+    function update(level: LevelType, setter: SetterOrUpdater<JSX.Element[]>, amount: number) {
+      if (amount > 0) {
+        solvedacApi.searchUnsolvedProblemByLevel(
+          // TODO improve searchTag split option
+          solved, amount, level, level, searchTag.split(' '), directionOption, sortOption).then((problems) => {
+            const result: JSX.Element[] = [];
+            problems.forEach((problem) => result.push(problemToComponent(problem)));
+            setter(result);
+          });
+      }
     }
 
-    if (amountSilver > 0) {
-      solvedacApi.searchUnsolvedProblemByLevel(
-        solved, amountSilver, Level.Silver, Level.Silver, directionOption, sortOption).then((problems) => {
-          const result: JSX.Element[] = [];
-          problems.forEach((problem) => result.push(problemToComponent(problem)));
-          setSilverElement(result);
-        });
-    }
-
-    if (amountGold > 0) {
-      solvedacApi.searchUnsolvedProblemByLevel(
-        solved, amountGold, Level.Gold, Level.Gold, directionOption, sortOption).then((problems) => {
-          const result: JSX.Element[] = [];
-          problems.forEach((problem) => result.push(problemToComponent(problem)));
-          setGoldElement(result);
-        });
-    }
-
-    if (amountPlatinum > 0) {
-      solvedacApi.searchUnsolvedProblemByLevel(
-        solved, amountPlatinum, Level.Platinum, Level.Platinum, directionOption, sortOption).then((problems) => {
-          const result: JSX.Element[] = [];
-          problems.forEach((problem) => result.push(problemToComponent(problem)));
-          setPlatinumElement(result);
-        });
-    }
-
-    if (amountDiamond > 0) {
-      solvedacApi.searchUnsolvedProblemByLevel(
-        solved, amountDiamond, Level.Diamond, Level.Diamond, directionOption, sortOption).then((problems) => {
-          const result: JSX.Element[] = [];
-          problems.forEach((problem) => result.push(problemToComponent(problem)));
-          setDiamondElement(result);
-        });
-    }
-
-    if (amountRuby > 0) {
-      solvedacApi.searchUnsolvedProblemByLevel(
-        solved, amountRuby, Level.Ruby, Level.Ruby, directionOption, sortOption).then((problems) => {
-          const result: JSX.Element[] = [];
-          problems.forEach((problem) => result.push(problemToComponent(problem)));
-          setRubyElement(result);
-        });
-    }
+    update(Level.Bronze, setBronzeElement, amountBronze);
+    update(Level.Silver, setSilverElement, amountSilver);
+    update(Level.Gold, setGoldElement, amountGold);
+    update(Level.Platinum, setPlatinumElement, amountPlatinum);
+    update(Level.Diamond, setDiamondElement, amountDiamond);
+    update(Level.Ruby, setRubyElement, amountRuby);
   }
 
   return (
     <>
       <Form>
-
         <MemberForm/>
-
         <AmountForm/>
-
-        <Form.Group className='mb-3' controlId='searchOption'>
-          <Row>
-            <Form.Label>{`검색 태그`}</Form.Label>
-            <Form.Control value={searchTag} onChange={onChangeSearchTag} />
-          </Row>
-          <Row>
-            <Col>
-              <Form.Label>{`정렬 기준`}</Form.Label>
-              <Form.Select defaultValue={sortOption} onChange={onChangeSortOption}>
-                <option value={Sort.id}>id</option>
-                <option value={Sort.level}>level</option>
-                <option value={Sort.title}>title</option>
-                <option value={Sort.average_try}>average_try</option>
-                <option value={Sort.random}>random</option>
-              </Form.Select>
-            </Col>
-            <Col>
-              <Form.Label>{`정렬 방법`}</Form.Label>
-              <Form.Select defaultValue={directionOption} onChange={onChangeDirectionOption}>
-                <option value={Direction.asc}>asc</option>
-                <option value={Direction.desc}>desc</option>
-              </Form.Select>
-            </Col>
-          </Row>
-        </Form.Group>
-
+        <SearchOption/>
       </Form>
 
       <Button onClick={updateSolvedProblem}>update</Button>
