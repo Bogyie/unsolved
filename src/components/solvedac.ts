@@ -47,6 +47,41 @@ const Level = {
     Ruby2 : 'r2',
     Ruby1 : 'r1',
  } as const;
+
+ const LevelArray = [
+    'UnRanked',
+    'Bronze 5',
+    'Bronze 4',
+    'Bronze 3',
+    'Bronze 2',
+    'Bronze 1',
+    'Silver 5',
+    'Silver 4',
+    'Silver 3',
+    'Silver 2',
+    'Silver 1',
+    'Gold 5',
+    'Gold 4',
+    'Gold 3',
+    'Gold 2',
+    'Gold 1',
+    'Platinum 5',
+    'Platinum 4',
+    'Platinum 3',
+    'Platinum 2',
+    'Platinum 1',
+    'Diamond 5',
+    'Diamond 4',
+    'Diamond 3',
+    'Diamond 2',
+    'Diamond 1',
+    'Ruby 5',
+    'Ruby 4',
+    'Ruby 3',
+    'Ruby 2',
+    'Ruby 1',
+ ] as const;
+
 export type LevelType = typeof Level[ keyof typeof Level];
 
 export interface SearchDto {
@@ -195,4 +230,9 @@ export class SolvedacApi {
 
         return reuslt;
     }
+}
+
+
+export function numericTierToString(tier:number) {
+    return LevelArray[tier];
 }
