@@ -161,8 +161,8 @@ export class SolvedacApi {
 
     private search(
         query: string,
-        direction: DirectionType = 'desc',
         page: number = 1,
+        direction: DirectionType = 'desc',
         sort: SortType = 'level'
     ): Promise<AxiosResponse<SearchDto>> {
         const uri = SolvedacApi.baseUrl + '/search/problem';
@@ -188,7 +188,7 @@ export class SolvedacApi {
         let page = 0;
 
         while (page++ <= limit) {
-            const response = await this.search(query);
+            const response = await this.search(query, page);
             const { status, data } = response;
             if (status === 200) {
                 const { count, items } = data;
@@ -255,7 +255,7 @@ export class SolvedacApi {
         const reuslt = new Set<ProblemDto>();
 
         while (page++ <= limit) {
-            const response = await this.search(query, direction, page, sort);
+            const response = await this.search(query, page, direction, sort);
 
             if (response.status === 200) {
                 const { data } = response;

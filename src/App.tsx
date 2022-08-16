@@ -96,7 +96,7 @@ function SearchForm() {
 
   const updateSolvedProblem = async () => {
     const solved = await solvedacApi.searchSolvedProblemByGroup(member.split(" |\\n"));
-
+    
     if (amountBronze > 0) {
       solvedacApi.searchUnsolvedProblemByLevel(
         solved, amountBronze, Level.Bronze, Level.Bronze, directionOption, sortOption).then((problems) => {
