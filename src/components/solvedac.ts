@@ -237,23 +237,15 @@ export class SolvedacApi {
         sort: SortType = 'level'
     ): Promise<AxiosResponse<SearchDto>> {
         const uri = `${SolvedacApi.baseUrl}/search/problem?query=${query}&direction=${direction}&page=${page}&sort=${sort}`;
-        // const uri = SolvedacApi.baseUrl + '/search/problem';
         return axios.get(
-            uri,
-            // {
-            //     params: {
-            //         query: query,
-            //         direction: direction,
-            //         page: page,
-            //         sort: sort,
-            //     }
-            // }
+            uri
         )
     }
 
     private async searchAll(
         query: string
     ): Promise<Set<ProblemDto>> {
+        const already = new Set<number>();
         const result = new Set<ProblemDto>();
 
         let limit = 1;
@@ -266,7 +258,10 @@ export class SolvedacApi {
                 const { count, items } = data;
                 limit = Math.ceil(count / SolvedacApi.itemsInPage);
                 items.forEach((item) => {
-                    result.add(item);
+                    if (!already.has(item.problemId)) {
+                        result.add(item);
+                        already.add(item.problemId);
+                    }
                 })
             } else {
                 break;
@@ -334,6 +329,8 @@ export class SolvedacApi {
         let page = 0;
         let limit = 1;
         const reuslt = new Set<ProblemDto>();
+        const already = new Set<number>();
+
 
         while (page++ <= limit) {
             const response = await this.search(query, page, direction, sort);
@@ -346,9 +343,11 @@ export class SolvedacApi {
 
                     if (
                         !solvedProblemNumber.has(item.problemId)  // 멤버 필터
+                        && !already.has(item.problemId)
                         && minAcceptUser <= item.acceptedUserCount // 맞은 인원 수 필터
                     ) {
                         reuslt.add(item);
+                        already.add(item.problemId);
                     }
                     if (reuslt.size >= amount) {
                         break;
