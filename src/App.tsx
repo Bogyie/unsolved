@@ -19,7 +19,6 @@ import {
   platinumElementState, diamondElementState, rubyElementState
 } from './atoms';
 
-import React from 'react';
 import { MemberForm } from './components/memberform';
 import { AmountForm } from './components/amountform';
 import { SearchOption } from './components/searchoption';
@@ -40,10 +39,9 @@ function SearchForm() {
   const amountRuby = useRecoilValue(amountRubyState);
 
   // search option
-  const [searchTag, setSearchTag] = useRecoilState(searchTagState);
-  const [sortOption, setSortOption] = useRecoilState(sortOptionState);
-  const [directionOption, setDirectionOption] = useRecoilState(directionOptionState);
-
+  const searchTag = useRecoilValue(searchTagState);
+  const sortOption = useRecoilValue(sortOptionState);
+  const directionOption = useRecoilValue(directionOptionState);
 
   const [bronzeElement, setBronzeElement] = useRecoilState(bronzeElementState);
   const [silverElement, setSilverElement] = useRecoilState(silverElementState);
