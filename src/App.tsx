@@ -1,112 +1,32 @@
 import { Button, Card, Col, Container, Form, Row } from 'react-bootstrap';
 import './App.css';
-import { atom, useRecoilState } from 'recoil';
-import { 
-  Direction, DirectionType, Level, 
-  numberToLevel, ProblemDto, SolvedacApi, 
-  Sort, SortType, stringToDirectionType, 
-  stringToSortType 
+import { useRecoilState, useRecoilValue } from 'recoil';
+
+import {
+  Direction, Level,
+  ProblemDto, SolvedacApi,
+  Sort, stringToDirectionType,
+  stringToSortType
 } from './components/solvedac';
+
+import {
+  memberState,
+  amountBronzeState, amountSilverState, amountGoldState,
+  amountPlatinumState, amountDiamondState, amountRubyState,
+  searchTagState, sortOptionState, directionOptionState,
+  bronzeElementState, silverElementState, goldElementState,
+  platinumElementState, diamondElementState, rubyElementState
+} from './atoms';
+
 import React from 'react';
-
-
-// Atom Start
-
-// member
-const memberState = atom<string>({
-  key: 'member',
-  default: ''
-})
-
-// amount
-const amountBronzeState = atom<number>({
-  key: 'amountBronze',
-  default: 0
-});
-
-const amountSilverState = atom<number>({
-  key: 'amountSilver',
-  default: 0
-});
-
-const amountGoldState = atom<number>({
-  key: 'amountGold',
-  default: 0
-});
-
-const amountPlatinumState = atom<number>({
-  key: 'amountPlatinum',
-  default: 0
-});
-
-const amountDiamondState = atom<number>({
-  key: 'amountDiamond',
-  default: 0
-});
-
-const amountRubyState = atom<number>({
-  key: 'amountRuby',
-  default: 0
-});
-
-// search options
-const searchTagState = atom<string>({
-  key: 'searchTag',
-  default: ''
-})
-
-const sortOptionState = atom<SortType>({
-  key: 'sortOption',
-  default: Sort.level
-});
-
-const directionOptionState = atom<DirectionType>({
-  key: 'directionOption',
-  default: Direction.desc
-});
-
-// search element
-const bronzeElementState = atom<JSX.Element[]>({
-  key: 'bronzeElement',
-  default: []
-});
-
-const silverElementState = atom<JSX.Element[]>({
-  key: 'silverElement',
-  default: []
-});
-
-const goldElementState = atom<JSX.Element[]>({
-  key: 'goldElement',
-  default: []
-});
-
-const platinumElementState = atom<JSX.Element[]>({
-  key: 'platinumElement',
-  default: []
-});
-
-const diamondElementState = atom<JSX.Element[]>({
-  key: 'diamondElement',
-  default: []
-});
-
-const rubyElementState = atom<JSX.Element[]>({
-  key: 'rubyElement',
-  default: []
-});
-// Atom End
+import { MemberForm } from './components/memberform';
 
 
 function SearchForm() {
   const solvedacApi = new SolvedacApi();
 
   // member
-  const [member, setMember] = useRecoilState(memberState);
-
-  const onChangeMamber = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setMember(event.currentTarget.value);
-  }
+  const member = useRecoilValue(memberState);
 
   // amount by level
   const [amountBronze, setAmountBronze] = useRecoilState(amountBronzeState);
@@ -180,55 +100,55 @@ function SearchForm() {
     if (amountBronze > 0) {
       solvedacApi.searchUnsolvedProblemByLevel(
         solved, amountBronze, Level.Bronze, Level.Bronze, directionOption, sortOption).then((problems) => {
-        const result: JSX.Element[] = [];
-        problems.forEach((problem) => result.push(problemToComponent(problem)));
-        setBronzeElement(result);
-      });
+          const result: JSX.Element[] = [];
+          problems.forEach((problem) => result.push(problemToComponent(problem)));
+          setBronzeElement(result);
+        });
     }
 
     if (amountSilver > 0) {
       solvedacApi.searchUnsolvedProblemByLevel(
         solved, amountSilver, Level.Silver, Level.Silver, directionOption, sortOption).then((problems) => {
-        const result: JSX.Element[] = [];
-        problems.forEach((problem) => result.push(problemToComponent(problem)));
-        setSilverElement(result);
-      });
+          const result: JSX.Element[] = [];
+          problems.forEach((problem) => result.push(problemToComponent(problem)));
+          setSilverElement(result);
+        });
     }
 
     if (amountGold > 0) {
       solvedacApi.searchUnsolvedProblemByLevel(
         solved, amountGold, Level.Gold, Level.Gold, directionOption, sortOption).then((problems) => {
-        const result: JSX.Element[] = [];
-        problems.forEach((problem) => result.push(problemToComponent(problem)));
-        setGoldElement(result);
-      });
+          const result: JSX.Element[] = [];
+          problems.forEach((problem) => result.push(problemToComponent(problem)));
+          setGoldElement(result);
+        });
     }
 
     if (amountPlatinum > 0) {
       solvedacApi.searchUnsolvedProblemByLevel(
         solved, amountPlatinum, Level.Platinum, Level.Platinum, directionOption, sortOption).then((problems) => {
-        const result: JSX.Element[] = [];
-        problems.forEach((problem) => result.push(problemToComponent(problem)));
-        setPlatinumElement(result);
-      });
+          const result: JSX.Element[] = [];
+          problems.forEach((problem) => result.push(problemToComponent(problem)));
+          setPlatinumElement(result);
+        });
     }
 
     if (amountDiamond > 0) {
       solvedacApi.searchUnsolvedProblemByLevel(
         solved, amountDiamond, Level.Diamond, Level.Diamond, directionOption, sortOption).then((problems) => {
-        const result: JSX.Element[] = [];
-        problems.forEach((problem) => result.push(problemToComponent(problem)));
-        setDiamondElement(result);
-      });
+          const result: JSX.Element[] = [];
+          problems.forEach((problem) => result.push(problemToComponent(problem)));
+          setDiamondElement(result);
+        });
     }
 
     if (amountRuby > 0) {
       solvedacApi.searchUnsolvedProblemByLevel(
         solved, amountRuby, Level.Ruby, Level.Ruby, directionOption, sortOption).then((problems) => {
-        const result: JSX.Element[] = [];
-        problems.forEach((problem) => result.push(problemToComponent(problem)));
-        setRubyElement(result);
-      });
+          const result: JSX.Element[] = [];
+          problems.forEach((problem) => result.push(problemToComponent(problem)));
+          setRubyElement(result);
+        });
     }
   }
 
@@ -236,10 +156,7 @@ function SearchForm() {
     <>
       <Form>
 
-        <Form.Group className='mb-3' controlId='fromGroupMember'>
-          <Form.Label>{'멤버 목록 (띄어쓰기로 구분)'}</Form.Label>
-          <Form.Control as='textarea' rows={3} value={member} onChange={onChangeMamber} />
-        </Form.Group>
+        <MemberForm/>
 
         <Form.Group className='mb-3' controlId='amountByLeve'>
           <Row>
