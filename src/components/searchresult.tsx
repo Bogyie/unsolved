@@ -39,7 +39,7 @@ export function SearchResult() {
             <ListGroup.Item>
                 <Row>
                     <Col>{problem.titleKo}</Col>
-                    <Col><a href={`https://www.acmicpc.net/problem/${problem.problemId}`} target="_blank" rel="noopener">{problem.problemId}</a></Col>
+                    <Col><a href={`https://www.acmicpc.net/problem/${problem.problemId}`} target="_blank" rel="noreferrer">{problem.problemId}</a></Col>
                 </Row>
             </ListGroup.Item>
         )

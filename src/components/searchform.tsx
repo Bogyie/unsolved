@@ -60,7 +60,7 @@ export function SearchForm(
                 <div className="m-2 p-3 bg-white rounded"  >
                     {Array.from(state).map((m) =>
                         <Badge className="m-1" bg='light'>
-                            <a href={`https://solved.ac/profile/${m}`} target="_blank" rel="noopener">{m}</a>
+                            <a href={`https://solved.ac/profile/${m}`} target="_blank" rel="noreferrer">{m}</a>
                             <CloseButton name={m} onClick={removeBadge} />
                         </Badge >)}
                 </div>
