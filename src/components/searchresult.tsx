@@ -3,6 +3,10 @@ import { useRecoilValue, useRecoilState, SetterOrUpdater } from "recoil";
 import { memberState, amountBronzeState, amountSilverState, amountGoldState, amountPlatinumState, amountDiamondState, amountRubyState, searchTagState, sortOptionState, directionOptionState, bronzeElementState, silverElementState, goldElementState, platinumElementState, diamondElementState, rubyElementState, minAcceptedUserCountState } from "../atoms";
 import { SolvedacApi, ProblemDto, LevelType, Level } from "./solvedac";
 
+// TODO IDB
+// https://dexie.org/
+// https://github.com/jakearchibald/idb
+
 export function SearchResult() {
     const solvedacApi = new SolvedacApi();
 
