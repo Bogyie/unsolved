@@ -1,7 +1,7 @@
 import React from "react";
-import { Form, Row, Col, Card, CardGroup } from "react-bootstrap";
+import { Form, Card, CardGroup } from "react-bootstrap";
 import { useRecoilState } from "recoil";
-import { searchTagState, sortOptionState, directionOptionState, minAcceptedUserCountState } from "../atoms";
+import { sortOptionState, directionOptionState, minAcceptedUserCountState } from "../atoms";
 import { stringToSortType, stringToDirectionType, Sort, Direction } from "./solvedac";
 
 

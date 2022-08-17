@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { Modal, Form, Button, ListGroupItem, ListGroup, Container, Row, Badge, CloseButton, ModalFooter, Card } from "react-bootstrap";
-import CardHeader from "react-bootstrap/esm/CardHeader";
+import { Modal, Form, Button, ListGroupItem, ListGroup, Badge, CloseButton, ModalFooter, Card } from "react-bootstrap";
 import { RecoilState, useRecoilState } from "recoil";
 import { SolvedacApi, SuggestionResult } from "./solvedac";
 
@@ -61,7 +60,7 @@ export function SearchForm(
                 <div className="m-2 p-3 bg-white rounded"  >
                     {Array.from(state).map((m) =>
                         <Badge className="m-1" bg='light'>
-                            <a href={`https://solved.ac/profile/${m}`} target="_blank">{m}</a>
+                            <a href={`https://solved.ac/profile/${m}`} target="_blank" rel="noreferrer">{m}</a>
                             <CloseButton name={m} onClick={removeBadge} />
                         </Badge >)}
                 </div>

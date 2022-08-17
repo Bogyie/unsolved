@@ -1,4 +1,4 @@
-import { Row, Col, Container, Button, Card, CardGroup, ListGroup } from "react-bootstrap";
+import { Row, Col, Container, Button, Card, ListGroup } from "react-bootstrap";
 import { useRecoilValue, useRecoilState, SetterOrUpdater } from "recoil";
 import { memberState, amountBronzeState, amountSilverState, amountGoldState, amountPlatinumState, amountDiamondState, amountRubyState, searchTagState, sortOptionState, directionOptionState, bronzeElementState, silverElementState, goldElementState, platinumElementState, diamondElementState, rubyElementState, minAcceptedUserCountState } from "../atoms";
 import { SolvedacApi, ProblemDto, LevelType, Level } from "./solvedac";
@@ -39,7 +39,7 @@ export function SearchResult() {
             <ListGroup.Item>
                 <Row>
                     <Col>{problem.titleKo}</Col>
-                    <Col><a href={`https://www.acmicpc.net/problem/${problem.problemId}`} target="_blank">{problem.problemId}</a></Col>
+                    <Col><a href={`https://www.acmicpc.net/problem/${problem.problemId}`} target="_blank" rel="noreferrer">{problem.problemId}</a></Col>
                 </Row>
             </ListGroup.Item>
         )

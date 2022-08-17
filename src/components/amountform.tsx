@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Row, Col, Container, Card } from "react-bootstrap";
+import { Form, Row, Col, Card } from "react-bootstrap";
 import { useRecoilState } from "recoil";
 import { amountBronzeState, amountSilverState, amountGoldState, amountPlatinumState, amountDiamondState, amountRubyState } from "../atoms";
 
