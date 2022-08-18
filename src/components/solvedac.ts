@@ -3,114 +3,14 @@
 
 import axios, { AxiosResponse } from "axios";
 
-export interface ProblemDto {
-    problemId: number;
-    titleKo: string;
-    isSolvable: boolean;
-    isPartial: boolean;
-    acceptedUserCount: number;
-    level: LevelType;
-    votedUserCount: number;
-    isLevelLocked: boolean;
-    averageTries: number;
-}
 
-export const Level = {
-    Bronze: 'b',
-    Bronze5: 'b5',
-    Bronze4: 'b4',
-    Bronze3: 'b3',
-    Bronze2: 'b2',
-    Bronze1: 'b1',
 
-    Silver: 's',
-    Silver5: 's5',
-    Silver4: 's4',
-    Silver3: 's3',
-    Silver2: 's2',
-    Silver1: 's1',
 
-    Gold: 'g',
-    Gold5: 'g5',
-    Gold4: 'g4',
-    Gold3: 'g3',
-    Gold2: 'g2',
-    Gold1: 'g1',
 
-    Platinum: 'p',
-    Platinum5: 'p5',
-    Platinum4: 'p4',
-    Platinum3: 'p3',
-    Platinum2: 'p2',
-    Platinum1: 'p1',
 
-    Diamond: 'd',
-    Diamond5: 'd5',
-    Diamond4: 'd4',
-    Diamond3: 'd3',
-    Diamond2: 'd2',
-    Diamond1: 'd1',
 
-    Ruby: 'r',
-    Ruby5: 'r5',
-    Ruby4: 'r4',
-    Ruby3: 'r3',
-    Ruby2: 'r2',
-    Ruby1: 'r1',
-} as const;
 
-export const LevelArray = [
-    Level.Bronze,
-    Level.Bronze,
-    Level.Bronze5,
-    Level.Bronze4,
-    Level.Bronze3,
-    Level.Bronze2,
-    Level.Bronze1,
-    Level.Silver,
-    Level.Silver5,
-    Level.Silver4,
-    Level.Silver3,
-    Level.Silver2,
-    Level.Silver1,
-    Level.Gold,
-    Level.Gold5,
-    Level.Gold4,
-    Level.Gold3,
-    Level.Gold2,
-    Level.Gold1,
-    Level.Platinum,
-    Level.Platinum5,
-    Level.Platinum4,
-    Level.Platinum3,
-    Level.Platinum2,
-    Level.Platinum1,
-    Level.Diamond,
-    Level.Diamond5,
-    Level.Diamond4,
-    Level.Diamond3,
-    Level.Diamond2,
-    Level.Diamond1,
-    Level.Ruby,
-    Level.Ruby5,
-    Level.Ruby4,
-    Level.Ruby3,
-    Level.Ruby2,
-    Level.Ruby1,
-] as const;
 
-export type LevelType = typeof Level[keyof typeof Level];
-
-export interface SearchDto {
-    count: number;
-    items: ProblemDto[];
-}
-
-export const Direction = {
-    asc: 'asc',
-    desc: 'desc'
-} as const;
-export type DirectionType = typeof Direction[keyof typeof Direction];
 
 export function stringToDirectionType(str: string) {
     switch (str) {
@@ -121,14 +21,7 @@ export function stringToDirectionType(str: string) {
     }
 }
 
-export const Sort = {
-    id: 'id',
-    level: 'level',
-    title: 'title',
-    average_try: 'average_try',
-    random: 'random'
-} as const;
-export type SortType = typeof Sort[keyof typeof Sort];
+
 
 export function stringToSortType(str: string) {
     switch (str) {
@@ -145,78 +38,19 @@ export function stringToSortType(str: string) {
     }
 }
 
-export interface SearchQueryDto {
-    query: string;
-    direction: DirectionType;
-    page: number;
-    sort: SortType;
-}
 
-export interface Organization {
-    organizationId: number;
-    name: string;
-    type: string;
-    rating: number;
-    userCount: number;
-    voteCount: number;
-    solvedCount: number;
-    color: string;
-}
 
-export interface Badge {
-    badgeId: string;
-    badgeImageUrl: string;
-    displayName: string;
-    displayDescription: string;
-}
 
-export interface Background {
-    backgroundId: string;
-    backgroundImageUrl: string;
-    author: string;
-    authorUrl: string;
-    displayName: string;
-    displayDescription: string;
-}
 
-export interface User {
-    handle: string;
-    bio: string;
-    organizations: Organization[];
-    badge: Badge;
-    background: Background;
-    profileImageUrl: string;
-    solvedCount: number;
-    voteCount: number;
-    exp: number;
-    tier: number;
-    rating: number;
-    ratingByProblemsSum: number;
-    ratingByClass: number;
-    ratingBySolvedCount: number;
-    ratingByVoteCount: number;
-    class: number;
-    classDecoration: string;
-    rivalCount: number;
-    reverseRivalCount: number;
-    maxStreak: number;
-}
 
-export interface Tag {
-    key: string;
-    isMeta: boolean;
-    bojTagId: number;
-    problemCount: number;
-}
 
-export interface SuggestionResult {
-    problems: ProblemDto[];
-    problemCount: number;
-    users: User[];
-    userCount: number;
-    tags: Tag[];
-    tagCount: number;
-}
+
+
+
+
+
+
+
 
 
 // Class & Function
