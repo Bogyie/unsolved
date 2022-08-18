@@ -16,7 +16,7 @@ jobs:
           yarn install --immutable --immutable-cache
           yarn run build
       - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@4.4.0
+        uses: JamesIves/github-pages-deploy-action@v4.4.0
         with:
           branch: gh-pages
           # 빌드되는 폴더명
