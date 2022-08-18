@@ -3,6 +3,7 @@ import { Form, Card, CardGroup } from "react-bootstrap";
 import { useRecoilState } from "recoil";
 import { sortOptionState, directionOptionState, minAcceptedUserCountState } from "../atoms";
 import { stringToSortType, stringToDirectionType, Sort, Direction } from "./solvedac";
+import { inputNumberParser } from "./utils";
 
 
 export function SearchOption() {
@@ -20,7 +21,7 @@ export function SearchOption() {
     }
 
     const onChangeMinAccpectUserCount = (event: React.ChangeEvent<HTMLInputElement>) => {
-      setMinAcceptUserCount(Number(event.currentTarget.value));
+      setMinAcceptUserCount(inputNumberParser(event.currentTarget.value));
     }
 
     // TODO 한국어 문제만 검색

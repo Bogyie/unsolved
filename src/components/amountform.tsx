@@ -2,6 +2,7 @@ import React from "react";
 import { Form, Row, Col, Card } from "react-bootstrap";
 import { useRecoilState } from "recoil";
 import { amountBronzeState, amountSilverState, amountGoldState, amountPlatinumState, amountDiamondState, amountRubyState } from "../atoms";
+import { inputNumberParser } from "./utils";
 
 export function AmountForm() {
   const [amountBronze, setAmountBronze] = useRecoilState(amountBronzeState);
@@ -12,36 +13,27 @@ export function AmountForm() {
   const [amountRuby, setAmountRuby] = useRecoilState(amountRubyState);
 
   const onChangeAmountBronze = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setAmountBronze(Number(event.currentTarget.value));
-  }
-
-  const onWheelAmountBronze = (event: React.WheelEvent<HTMLInputElement>) => {
-    if (event.deltaY < 0) {
-      setAmountBronze(amountBronze + 1);
-    }
-    if (event.deltaY > 0 && 0 < amountBronze) {
-      setAmountBronze(amountBronze - 1);
-    }
+    setAmountBronze(inputNumberParser(event.currentTarget.value));
   }
 
   const onChangeAmountSilver = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setAmountSilver(Number(event.currentTarget.value));
+    setAmountSilver(inputNumberParser(event.currentTarget.value));
   }
 
   const onChangeAmountGold = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setAmountGold(Number(event.currentTarget.value));
+    setAmountGold(inputNumberParser(event.currentTarget.value));
   }
 
   const onChangeAmountPlatinum = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setAmountPlatinum(Number(event.currentTarget.value));
+    setAmountPlatinum(inputNumberParser(event.currentTarget.value));
   }
 
   const onChangeAmountDiamond = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setAmountDiamond(Number(event.currentTarget.value));
+    setAmountDiamond(inputNumberParser(event.currentTarget.value));
   }
 
   const onChangeAmountRuby = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setAmountRuby(Number(event.currentTarget.value));
+    setAmountRuby(inputNumberParser(event.currentTarget.value));
   }
 
   return (
@@ -53,7 +45,7 @@ export function AmountForm() {
         <Row>
           <Col>
             <Form.Label style={{ color: 'rgb(160, 90, 31)', fontWeight: 'bold' }}>브론즈</Form.Label>
-            <Form.Control value={amountBronze} onChange={onChangeAmountBronze} onWheel={onWheelAmountBronze} /></Col>
+            <Form.Control value={amountBronze} onChange={onChangeAmountBronze} /></Col>
           <Col>
             <Form.Label style={{ color: 'rgb(119, 134, 154)', fontWeight: 'bold' }}>실버</Form.Label>
             <Form.Control value={amountSilver} onChange={onChangeAmountSilver} /></Col>
