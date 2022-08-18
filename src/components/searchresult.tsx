@@ -58,6 +58,8 @@ export function SearchResult() {
                             .forEach((problem) => result.push(problemToComponent(problem)));
                         setter(result);
                     });
+            } else {
+                setter([]); // amount 가 0이면 검색 결과 초기화
             }
         }
 
