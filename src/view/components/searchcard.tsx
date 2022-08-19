@@ -94,7 +94,8 @@ export function SearchCard(cardId: number) {
     const easyLevel = useRecoilValue(easyLevelState(cardId));
 
     // type check and get
-    const B = TierIcon[easyLevel type];
+    // https://stackoverflow.com/questions/43804805/check-if-value-exists-in-enum-in-typescript
+    const B = Obejct;
 
     const [hardLevelColor, setHardLevelColor] = useRecoilState(hardLevelColorState(cardId));
     const [hardLevelNumber, setHardLevelNumber] = useRecoilState(hardLevelNumberState(cardId));
