@@ -1,24 +1,26 @@
-import { Card, FormControl } from "react-bootstrap";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { amountState, directoinState, langState, levelState, searchQueryState, sortState, tagJoinState, tagState, userState } from "../../model/atoms";
+import { Card, FormCheck, FormControl, FormSelect } from "react-bootstrap";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { 
+    amountState, directoinState, easyLevelColorState, 
+    easyLevelNumberState, easyLevelState, hardLevelColorState, hardLevelNumberState, 
+    langState, searchQueryState, sortState, tagJoinLabelState, 
+    tagJoinState, tagState, userJoinLabelState, userJoinState, userState 
+} from "../../model/atoms";
 import { Form } from 'react-bootstrap';
-import React from "react";
+import React, { useState } from "react";
 import { SolvedacApi } from "../../model/api/solvedac.api";
 import { ProblemDto } from "../../model/dto/problem.dto";
+import { TierIcon } from "../../asset";
 
 export function SearchCard(cardId: number) {
-    const [amount, setAmount] = useRecoilState(amountState(cardId));
-    const [tag, setTag] = useRecoilState(tagState(cardId));
-    const [tagJoin, setTagJoin] = useRecoilState(tagJoinState(cardId));
-    const [user, setUser] = useRecoilState(userState(cardId));
+    
     const [lang, setLang] = useRecoilState(langState(cardId));
-    const [level, setLevel] = useRecoilState(levelState(cardId));
     const [direction, setDirection] = useRecoilState(directoinState(cardId));
     const [sort, setSort] = useRecoilState(sortState(cardId));
-    const query = useRecoilValue(searchQueryState(cardId));
+    
     
     let problems: ProblemDto[] = [];
-
+    const query = useRecoilValue(searchQueryState(cardId));
     async function fetchProblem() {
         const includes = new Set<number>();
         problems = [];
@@ -47,19 +49,65 @@ export function SearchCard(cardId: number) {
         }
     }
 
+    const [amount, setAmount] = useRecoilState(amountState(cardId));
     const amountChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setAmount(Number(event.currentTarget.value));
+        if (!isNaN(+event.currentTarget.value)) {
+            setAmount(Number(event.currentTarget.value));
+        } else {
+            alert('숫자만 입력 가능합니다.')
+        }
     }
 
+    const [tag, setTag] = useRecoilState(tagState(cardId));
     const tagChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setTag([{key:event.currentTarget.value}]);
+        setTag([{key:event.currentTarget.value}, {key:event.currentTarget.value}]);
     }
+
+    const tagJoinLabel = useRecoilValue(tagJoinLabelState(cardId));
+    const setTagJoin = useSetRecoilState(tagJoinState(cardId));
+    const tagJoinChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+        if (event.target.checked) {
+            setTagJoin('&');
+        } else {
+            setTagJoin('|');
+        }
+    }
+
+    const [user, setUser] = useRecoilState(userState(cardId));
+    const userChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setUser([{handle:event.currentTarget.value}, {handle:event.currentTarget.value}]);
+    }
+
+    const userJoinLabel = useRecoilValue(userJoinLabelState(cardId));
+    const setUserJoin = useSetRecoilState(userJoinState(cardId));
+    const userJoinChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+        if (event.target.checked) {
+            setUserJoin('&');
+        } else {
+            setUserJoin('|');
+        }
+    }
+
+
+    const [easyLevelColor, setEasyLevelColor] = useRecoilState(easyLevelColorState(cardId));
+    const [easyLevelNumber, setEasyLevelNumber] = useRecoilState(easyLevelNumberState(cardId));
+    const easyLevel = useRecoilValue(easyLevelState(cardId));
+
+    // type check and get
+    const B = TierIcon[easyLevel type];
+
+    const [hardLevelColor, setHardLevelColor] = useRecoilState(hardLevelColorState(cardId));
+    const [hardLevelNumber, setHardLevelNumber] = useRecoilState(hardLevelNumberState(cardId));
 
     return (
         <Card>
+            <B/>
             <Form>
                 <FormControl value={amount} onChange={amountChangeHandler} />
+                <FormCheck type='switch' label={tagJoinLabel} onChange={tagJoinChangeHandler}/>
+                <FormCheck type='switch' label={userJoinLabel} onChange={userJoinChangeHandler}/>
                 <FormControl value={tag.length > 0 ? tag[0].key : ''} onChange={tagChangeHandler} />
+                <FormControl value={user.length > 0 ? user[0].handle : ''} onChange={userChangeHandler} />
             </Form>
             <div>{query}</div>
         </Card>

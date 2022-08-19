@@ -4,7 +4,7 @@ import { LevelTypes, ProblemDto } from "./dto/problem.dto";
 import { DirectoinTypes, SortTypes } from "./dto/searchquery.dto";
 import { TagDto } from "./dto/tag.dto";
 import { UserDto } from "./dto/user.dto";
-
+import { TierIcon } from "../asset";
 
 export const amountState = atomFamily<number, number>({
     key: 'amountState',
@@ -21,6 +21,11 @@ export const tagJoinState = atomFamily<'|' | '&', number>({
     default: '|'  // | : 태그 중 하나라도 해당하는 문제  & : 모든 태그에 해당하는 문제
 })
 
+export const tagJoinLabelState = selectorFamily<'부분 적용' | '모두 적용', number>({
+    key: 'tagJoinLabelState',
+    get: (key) => ({get}) => get(tagJoinState(key)) == '|' ? '부분 적용' : '모두 적용'
+})
+
 export const tagQueryState = selectorFamily<string, number>({
     key: 'tagQueryState',
     get: (key) => ({ get }) => get(tagState(key)).map(t => `#${t.key}`).join(get(tagJoinState(key)))
@@ -34,6 +39,11 @@ export const userState = atomFamily<UserDto[], number>({
 export const userJoinState = atomFamily<'|' | '&', number>({
     key: 'userJoinState',
     default: '|' // | : 모든 유저가 풀지 않은 문제   & : 한 명이라도 풀지 않은 문제
+})
+
+export const userJoinLabelState = selectorFamily<'모든 멤버가 풀지 않음' | '일부 멤버가 풀지 않음', number>({
+    key: 'userJoinLabelState',
+    get: (key) => ({get}) => get(userJoinState(key)) == '|' ? '모든 멤버가 풀지 않음' : '일부 멤버가 풀지 않음'
 })
 
 export const userQueryState = selectorFamily<string, number>({
@@ -73,17 +83,40 @@ export const langQueryState = selectorFamily<string, number>({
     }
 })
 
-export const levelState = atomFamily<{ easy: LevelTypes | '', hard: LevelTypes | '' }, number>({
-    key: 'levelState',
-    default: { easy: '', hard: '' }
+// Level State
+export const easyLevelColorState = atomFamily<'b' | 's' | 'g' | 'p' | 'd' | 'r', number>({
+    key: 'easyLevelColorState',
+    default: 'b'
+})
+
+export const easyLevelNumberState = atomFamily<'5' | '4' | '3' | '2' | '1', number>({
+    key: 'easyLevelNumberState',
+    default: '5'
+})
+
+export const easyLevelState = selectorFamily<string, number>({
+    key: 'easyLevelState',
+    get: (key) => ({get}) => get(easyLevelColorState(key)) + get(easyLevelNumberState(key))
+})
+
+export const hardLevelColorState = atomFamily<'b' | 's' | 'g' | 'p' | 'd' | 'r', number>({
+    key: 'hardLevelColorState',
+    default: 'r'
+})
+
+export const hardLevelNumberState = atomFamily<'5' | '4' | '3' | '2' | '1', number>({
+    key: 'hardLevelNumberState',
+    default: '1'
+})
+
+export const hardLevelState = selectorFamily<string, number>({
+    key: 'hardLevelState',
+    get: (key) => ({get}) => get(hardLevelColorState(key)) + get(hardLevelNumberState(key))
 })
 
 export const levelQueryState = selectorFamily<string, number>({
     key: 'levelQueryState',
-    get: (key) => ({ get }) => {
-        const state = get(levelState(key));
-        return `*${state.easy}..${state.hard}`;
-    }
+    get: (key) => ({ get }) => `*${get(easyLevelState(key))}..${get(hardLevelState(key))}`
 })
 
 export const directoinState = atomFamily<DirectoinTypes, number>({
