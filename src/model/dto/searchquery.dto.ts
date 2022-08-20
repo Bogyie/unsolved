@@ -1,4 +1,4 @@
-export type DirectoinTypes =
+export type DirectionTypes =
     'asc'       /* 오름차순 */
     | 'desc'    /* 내림차순 */;
 
@@ -12,7 +12,7 @@ export type SortTypes =
 
 export interface SearchQueryDto {
     query: string;
-    direction: DirectoinTypes;
+    direction: DirectionTypes;
     page: number;
     sort: SortTypes;
 }

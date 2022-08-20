@@ -1,6 +1,6 @@
 import axios from "axios";
 import { SearchDto } from "../dto/search.dto";
-import { DirectoinTypes, SortTypes } from "../dto/searchquery.dto";
+import { DirectionTypes, SortTypes } from "../dto/searchquery.dto";
 import { SuggestionDto } from "../dto/suggestion.dto";
 
 export class SolvedacApi {
@@ -25,7 +25,7 @@ export class SolvedacApi {
     public static async search(
         params: {
             page?: number,
-            direction?: DirectoinTypes,
+            direction?: DirectionTypes,
             sort?: SortTypes,
             query?: string
         }
