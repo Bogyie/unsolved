@@ -1,10 +1,7 @@
 import { atomFamily, selectorFamily } from "recoil";
-import { SolvedacApi } from "./api/solvedac.api";
-import { LevelTypes, ProblemDto } from "./dto/problem.dto";
-import { DirectoinTypes, SortTypes } from "./dto/searchquery.dto";
+import { DirectionTypes, SortTypes } from "./dto/searchquery.dto";
 import { TagDto } from "./dto/tag.dto";
 import { UserDto } from "./dto/user.dto";
-import { TierIcon } from "../asset";
 
 export const amountState = atomFamily<number, number>({
     key: 'amountState',
@@ -119,7 +116,7 @@ export const levelQueryState = selectorFamily<string, number>({
     get: (key) => ({ get }) => `*${get(easyLevelState(key))}..${get(hardLevelState(key))}`
 })
 
-export const directoinState = atomFamily<DirectoinTypes, number>({
+export const directionState = atomFamily<DirectionTypes, number>({
     key: 'directionState',
     default: 'asc'
 })

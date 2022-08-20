@@ -1,7 +1,7 @@
-import { Card, FormCheck, FormControl, FormSelect } from "react-bootstrap";
+import { Card, FormCheck, FormControl} from "react-bootstrap";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { 
-    amountState, directoinState, easyLevelColorState, 
+    amountState, directionState, easyLevelColorState,
     easyLevelNumberState, easyLevelState, hardLevelColorState, hardLevelNumberState, 
     langState, searchQueryState, sortState, tagJoinLabelState, 
     tagJoinState, tagState, userJoinLabelState, userJoinState, userState 
@@ -10,12 +10,12 @@ import { Form } from 'react-bootstrap';
 import React, { useState } from "react";
 import { SolvedacApi } from "../../model/api/solvedac.api";
 import { ProblemDto } from "../../model/dto/problem.dto";
-import { TierIcon } from "../../asset";
+import {getTierIcon} from "../../asset";
 
 export function SearchCard(cardId: number) {
     
     const [lang, setLang] = useRecoilState(langState(cardId));
-    const [direction, setDirection] = useRecoilState(directoinState(cardId));
+    const [direction, setDirection] = useRecoilState(directionState(cardId));
     const [sort, setSort] = useRecoilState(sortState(cardId));
     
     
@@ -88,22 +88,49 @@ export function SearchCard(cardId: number) {
         }
     }
 
-
+    const [tierIcon, setTierIcon] = useState(getTierIcon('b1')(''));
     const [easyLevelColor, setEasyLevelColor] = useRecoilState(easyLevelColorState(cardId));
     const [easyLevelNumber, setEasyLevelNumber] = useRecoilState(easyLevelNumberState(cardId));
     const easyLevel = useRecoilValue(easyLevelState(cardId));
+    const easyLevelColorChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+        switch (event.currentTarget.value) {
+            case 'b':
+                setEasyLevelColor('b');
+                setTierIcon(getTierIcon('b')(''))
+                break;
+            case 's':
+                setEasyLevelColor('s');
+                setTierIcon(getTierIcon('s')(''))
+                break;
+            case 'g':
+                setEasyLevelColor('g');
+                setTierIcon(getTierIcon('g')(''))
+                break;
+            case 'p':
+                setEasyLevelColor('p');
+                setTierIcon(getTierIcon('p')(''))
+                break;
+            case 'd':
+                setEasyLevelColor('d');
+                setTierIcon(getTierIcon('d')(''))
+                break;
+            case 'r':
+                setEasyLevelColor('r');
+                setTierIcon(getTierIcon('r')(''))
+                break;
+        }
+    }
 
-    // type check and get
-    // https://stackoverflow.com/questions/43804805/check-if-value-exists-in-enum-in-typescript
-    const B = Obejct;
+
 
     const [hardLevelColor, setHardLevelColor] = useRecoilState(hardLevelColorState(cardId));
     const [hardLevelNumber, setHardLevelNumber] = useRecoilState(hardLevelNumberState(cardId));
 
     return (
         <Card>
-            <B/>
             <Form>
+                {tierIcon}
+                <FormControl value={easyLevelColor} onChange={easyLevelColorChangeHandler}/>
                 <FormControl value={amount} onChange={amountChangeHandler} />
                 <FormCheck type='switch' label={tagJoinLabel} onChange={tagJoinChangeHandler}/>
                 <FormCheck type='switch' label={userJoinLabel} onChange={userJoinChangeHandler}/>
