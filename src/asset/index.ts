@@ -10,7 +10,7 @@ import {LevelTypes} from "../model/dto/problem.dto";
 
 export function getTierIcon(name: LevelTypes): (props: any) => JSX.Element {
     switch (name) {
-        case'b':
+        case'b': // FIXME : SVG 파일이 정상 작동하지 않음.
             return B;
         case 'b5':
             return B5;
@@ -22,7 +22,7 @@ export function getTierIcon(name: LevelTypes): (props: any) => JSX.Element {
             return B2;
         case 'b1':
             return B1;
-        case 's':
+        case 's': // FIXME : SVG 파일이 정상 작동하지 않음.
             return S;
         case 's5':
             return S5;
@@ -34,7 +34,7 @@ export function getTierIcon(name: LevelTypes): (props: any) => JSX.Element {
             return S2;
         case 's1':
             return S1;
-        case 'g':
+        case 'g': // FIXME : SVG 파일이 정상 작동하지 않음.
             return G;
         case 'g5':
             return G5;
@@ -46,7 +46,7 @@ export function getTierIcon(name: LevelTypes): (props: any) => JSX.Element {
             return G2;
         case 'g1':
             return G1;
-        case 'p':
+        case 'p': // FIXME : SVG 파일이 정상 작동하지 않음.
             return P;
         case 'p5':
             return P5;
@@ -58,7 +58,7 @@ export function getTierIcon(name: LevelTypes): (props: any) => JSX.Element {
             return P2;
         case 'p1':
             return P1;
-        case 'd':
+        case 'd': // FIXME : SVG 파일이 정상 작동하지 않음.
             return D;
         case 'd5':
             return D5;
@@ -70,7 +70,7 @@ export function getTierIcon(name: LevelTypes): (props: any) => JSX.Element {
             return D2;
         case 'd1':
             return D1;
-        case 'r':
+        case 'r': // FIXME : SVG 파일이 정상 작동하지 않음.
             return R;
         case 'r5':
             return R5;
@@ -83,7 +83,7 @@ export function getTierIcon(name: LevelTypes): (props: any) => JSX.Element {
         case 'r1':
             return R1;
         default:
-            // FIXME : ? 아이콘으로 변경 필요
+            // FIXME : ? 아이콘으로 수정 필요
             return B;
     }
 }

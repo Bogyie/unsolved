@@ -10,15 +10,25 @@ import { Form } from 'react-bootstrap';
 import React, { useState } from "react";
 import { SolvedacApi } from "../../model/api/solvedac.api";
 import { ProblemDto } from "../../model/dto/problem.dto";
-import {getTierIcon} from "../../asset";
+import { getTierIcon } from "../../asset";
+import { TagDto } from "../../model/dto/tag.dto";
+import { Dialog } from "./modal";
+import { UserDto } from "../../model/dto/user.dto";
 
+// TODO : 컴포넌트 분리
 export function SearchCard(cardId: number) {
-    
+
+    // Lang
+    // TODO : select box impl
     const [lang, setLang] = useRecoilState(langState(cardId));
+
+    // Direction
     const [direction, setDirection] = useRecoilState(directionState(cardId));
+
+    // Sort
     const [sort, setSort] = useRecoilState(sortState(cardId));
     
-    
+    // Problem
     let problems: ProblemDto[] = [];
     const query = useRecoilValue(searchQueryState(cardId));
     async function fetchProblem() {
@@ -49,6 +59,7 @@ export function SearchCard(cardId: number) {
         }
     }
 
+    // Amount
     const [amount, setAmount] = useRecoilState(amountState(cardId));
     const amountChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (!isNaN(+event.currentTarget.value)) {
@@ -58,8 +69,10 @@ export function SearchCard(cardId: number) {
         }
     }
 
+    // Tag
     const [tag, setTag] = useRecoilState(tagState(cardId));
     const tagChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+        // TODO : Suggestion Dialog 와 연계하여 기능 구현
         setTag([{key:event.currentTarget.value}, {key:event.currentTarget.value}]);
     }
 
@@ -73,8 +86,13 @@ export function SearchCard(cardId: number) {
         }
     }
 
+    const TagSearchDialog = () => Dialog<TagDto>(
+      '태그', setTag,(s) => s.tags);
+
+    // User
     const [user, setUser] = useRecoilState(userState(cardId));
     const userChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+        // TODO : Suggestion Dialog 와 연계하여 기능 구현
         setUser([{handle:event.currentTarget.value}, {handle:event.currentTarget.value}]);
     }
 
@@ -88,10 +106,14 @@ export function SearchCard(cardId: number) {
         }
     }
 
+    const UserSearchDialog = () => Dialog<UserDto>(
+      '유저', setUser,(s) => s.users);
+
     const [tierIcon, setTierIcon] = useState(getTierIcon('b1')(''));
     const [easyLevelColor, setEasyLevelColor] = useRecoilState(easyLevelColorState(cardId));
     const [easyLevelNumber, setEasyLevelNumber] = useRecoilState(easyLevelNumberState(cardId));
     const easyLevel = useRecoilValue(easyLevelState(cardId));
+    // TODO : Level 선택 기능 구현
     const easyLevelColorChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
         switch (event.currentTarget.value) {
             case 'b':
@@ -121,8 +143,6 @@ export function SearchCard(cardId: number) {
         }
     }
 
-
-
     const [hardLevelColor, setHardLevelColor] = useRecoilState(hardLevelColorState(cardId));
     const [hardLevelNumber, setHardLevelNumber] = useRecoilState(hardLevelNumberState(cardId));
 
@@ -134,8 +154,12 @@ export function SearchCard(cardId: number) {
                 <FormControl value={amount} onChange={amountChangeHandler} />
                 <FormCheck type='switch' label={tagJoinLabel} onChange={tagJoinChangeHandler}/>
                 <FormCheck type='switch' label={userJoinLabel} onChange={userJoinChangeHandler}/>
+                {/*TODO FormControl 말고 캡슐 형태로 표현, 해당 영역 클릭하면 검색 창 띄움*/}
                 <FormControl value={tag.length > 0 ? tag[0].key : ''} onChange={tagChangeHandler} />
+                <TagSearchDialog/>
+                {/*TODO FormControl 말고 캡슐 형태로 표현, 해당 영역 클릭하면 검색 창 띄움*/}
                 <FormControl value={user.length > 0 ? user[0].handle : ''} onChange={userChangeHandler} />
+                <UserSearchDialog/>
             </Form>
             <div>{query}</div>
         </Card>

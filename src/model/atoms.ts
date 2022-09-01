@@ -18,9 +18,9 @@ export const tagJoinState = atomFamily<'|' | '&', number>({
     default: '|'  // | : 태그 중 하나라도 해당하는 문제  & : 모든 태그에 해당하는 문제
 })
 
-export const tagJoinLabelState = selectorFamily<'부분 적용' | '모두 적용', number>({
+export const tagJoinLabelState = selectorFamily<'태그 부분 적용' | '태그 모두 적용', number>({
     key: 'tagJoinLabelState',
-    get: (key) => ({get}) => get(tagJoinState(key)) == '|' ? '부분 적용' : '모두 적용'
+    get: (key) => ({get}) => get(tagJoinState(key)) == '|' ? '태그 부분 적용' : '태그 모두 적용'
 })
 
 export const tagQueryState = selectorFamily<string, number>({
